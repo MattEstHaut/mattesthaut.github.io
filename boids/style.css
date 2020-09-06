@@ -33,4 +33,95 @@ html, body
 #options
 {
 	width: 500px; height: 500px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#options > div:not(:first-child)
+{
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	margin: 10px 0 10px 0;
+}
+
+#options > div > * 
+{
+	width: 20%;
+}
+
+#options > div > p
+{
+	font-size: 13px;
+	color: #fba6ff;
+	white-space: nowrap;
+}
+
+button, input
+{
+	background-color: #fba6ff;
+	outline: none;
+	border: none;
+	border-radius: 2px;
+	text-align: center;
+	font-weight: 300;
+	color: white;
+	transition: 0.3;
+}
+
+button:hover, input:hover
+{
+	background-color: white;
+	color: #fba6ff;
+}
+
+input:hover::-webkit-input-placeholder
+{
+	color: #fba6ff;
+}
+
+input::-webkit-input-placeholder
+{
+	color: white;
+}
+
+#options > div:first-child
+{
+	width: 500px;
+	display: flex;
+	flex-direction: column;
+	justify-content: top;
+	align-items: left;
+	margin: 10px 0 10px 0;
+	height: 200px;
+}
+
+#options > div:first-child > *
+{
+	color: #fba6ff;
+	width: 100%;
+	font-size: 18px;
+	margin: 0 20px 0 22px;
+}
+
+#options > div:first-child > h1
+{
+	font-weight: 100;
+	font-size: 40px;
+	margin: 10px 0 -10px 20px;
+}
+
+#options > div:last-child
+{
+	height: 200px;
+}
+
+#options > div:last-child > *
+{
+	width: auto;
+	color: #fba6ff;
 }

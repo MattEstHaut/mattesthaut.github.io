@@ -10,7 +10,38 @@
 	<div id="main">
 		<canvas id="main-canvas" width="500" height="500"></canvas>
 		<div id="options">
-			
+			<div id="presentation">
+				<h1>Boids simulation</h1>
+				<p>Simulation of flock of birds in flight.</p>
+			</div>
+			<div>
+				<p>Boids number :</p>
+				<input type="number" value="300" id="boids" placeholder="boids number"></input>
+				<button id="reset">reset</button>
+				<button id="pause">pause</button>
+			</div>
+			<div>
+				<p>Separation distance :</p>
+				<input type="number" value="20" id="sdistance" placeholder="separation distance"></input>
+				<p>Alignement distance :</p>
+				<input type="number" value="40" id="adistance" placeholder="alignement distance"></input>
+			</div>
+			<div>
+				<p>Cohesion distance :</p>
+				<input type="number" value="60" id="cdistance" placeholder="cohesion distance"></input>
+				<p>Scale :</p>
+				<input type="number" value="4" id="scale" placeholder="scale"></input>
+			</div>
+			<div>
+				<button id="obstacle">put obstacle</button>
+				<input type="number" value="0" id="ox" placeholder="x"></input>
+				<input type="number" value="0" id="oy" placeholder="y"></input>
+				<input type="number" value="40" id="or" placeholder="radius"></input>
+			</div>
+			<div>
+				<a href="https://github.com/MattEstHaut/boids">GitHub repository</a>
+				<a href="https://github.com/MattEstHaut">GitHub profile</a>
+			</div>
 		</div>
 	</div>
 	<script type="text/javascript" src="boids.js"></script>

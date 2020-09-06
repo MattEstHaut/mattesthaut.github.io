@@ -1,7 +1,7 @@
 const CANVAS = document.getElementById("main-canvas");
 const CTX = CANVAS.getContext("2d");
 const WIDTH = CANVAS.width; const HEIGHT = CANVAS.height;
-const SCALE = 4;
+var SCALE = 4;
 
 var ALIGNEMENT_PERCEPTION = 40;
 var COHESION_PERCEPTION = 60;
@@ -12,9 +12,14 @@ var SEPARATION_SCALE = 1.5;
 var MAX_SPEED = 1;
 var MAX_F = 0.01;
 
+var PAUSE = false;
+
 const FLOCK = [];
 FLOCK.show = () => {
 	clear();
+	for (let obs of OBSTACLES) {
+		obs.show();
+	}
 	for (let boid of FLOCK) {
 		boid.edges();
 		boid.flock(FLOCK);
@@ -24,6 +29,8 @@ FLOCK.show = () => {
 		boid.show();
 	}
 };
+
+const OBSTACLES = [];
 
 const clear = () => {
 	CTX.fillStyle = "#fba6ff";
@@ -176,14 +183,44 @@ class Boid {
 		return steering;
 	}
 
+	obs_separation(obstacles) {
+		let steering = new Vector();
+		let total = 0;
+		for (let obstacle of obstacles) {
+			let radial_vector = new Vector(
+				this.position.x-obstacle.position.x, 
+				this.position.y-obstacle.position.y).normalize();
+			let nearest_point = radial_vector.add(obstacle.position);
+
+			let d = distance(this.position.x, this.position.y, nearest_point.x, nearest_point.y);
+			if (d <= 60 && d != 0) {
+				let difference = new Vector(
+					this.position.x-obstacle.position.x, 
+					this.position.y-obstacle.position.y);
+				difference.div(d);
+				steering.add(difference);
+				total++;
+			}
+		}
+		if (total > 0) {
+			steering.div(total);
+			steering.normalize().mul(MAX_SPEED);
+			steering.sub(this.velocity);
+			steering.limit(MAX_F*3);
+		}
+		return steering;
+	}
+
 	flock(boids) {
 		let alignement = this.align(boids).mul(ALIGNEMENT_SCALE);
 		let cohesion = this.cohesion(boids).mul(COHESION_SCALE);
 		let separation = this.separation(boids).mul(SEPARATION_SCALE);
+		let obs_separation = this.obs_separation(OBSTACLES).mul(SEPARATION_SCALE);
 		this.acceleration.mul(0);
 		this.acceleration.add(alignement);
 		this.acceleration.add(cohesion);
 		this.acceleration.add(separation);
+		this.acceleration.add(obs_separation);
 	}
 
 	show() {
@@ -200,14 +237,34 @@ class Boid {
 	}
 }
 
+class Obstacle {
+	constructor(x, y, r) {
+		this.position = new Vector(x, y);
+		this.radius = r;
+	}
+
+	show() {
+		CTX.fillStyle = "white";
+		CTX.beginPath();
+		CTX.arc(this.position.x, this.position.y, this.radius, 0, 2*Math.PI);
+		CTX.fill();
+	}
+}
+
 const setup = (number=50) => {
 	for (let b=0; b<number; b++) {
 		FLOCK.push(new Boid());
 	}
 }
 
-setup(200);
+const reset = () => {
+	FLOCK.length = 0;
+}
 
-var interval = setInterval(() => {
-	FLOCK.show();
-}, 10);
+const run = () => {
+	var interval = setInterval(() => {
+		if (!PAUSE) {
+			FLOCK.show();
+		}
+	}, 10);	
+}
