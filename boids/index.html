@@ -15,28 +15,36 @@
 				<p>Simulation of flock of birds in flight.</p>
 			</div>
 			<div>
-				<p>Boids number :</p>
-				<input type="number" value="300" id="boids" placeholder="boids number"></input>
+				
+				<button id="clear">clear</button>
 				<button id="reset">reset</button>
 				<button id="pause">pause</button>
+				<button id="default">default</button>
 			</div>
 			<div>
-				<p>Separation distance :</p>
-				<input type="number" value="20" id="sdistance" placeholder="separation distance"></input>
-				<p>Alignement distance :</p>
-				<input type="number" value="40" id="adistance" placeholder="alignement distance"></input>
+				<p>Boids number :</p>
+				<input type="number" value="300" id="boids" placeholder="boids number"></input>
+				<p>Predator number :</p>
+				<input type="number" value="1" id="predators" placeholder="predators number"></input>
 			</div>
 			<div>
-				<p>Cohesion distance :</p>
-				<input type="number" value="60" id="cdistance" placeholder="cohesion distance"></input>
-				<p>Scale :</p>
-				<input type="number" value="4" id="scale" placeholder="scale"></input>
+				<p>Cohesion radius :</p>
+				<input type="number" value="40" id="cohesion_radius" placeholder="cohesion radius"></input>
+				<p>Cohesion scale :</p>
+				<input type="number" value="2" id="cohesion_scale" placeholder="cohesion scale"></input>
+			</div>
+			
+			<div>
+				<p>Alignement radius :</p>
+				<input type="number" value="30" id="alignement_radius" placeholder="alignement radius"></input>
+				<p>Alignement scale :</p>
+				<input type="number" value="1.5" id="alignement_scale" placeholder="alignement scale"></input>
 			</div>
 			<div>
-				<button id="obstacle">put obstacle</button>
-				<input type="number" value="0" id="ox" placeholder="x"></input>
-				<input type="number" value="0" id="oy" placeholder="y"></input>
-				<input type="number" value="40" id="or" placeholder="radius"></input>
+				<p>Separation radius :</p>
+				<input type="number" value="20" id="separation_radius" placeholder="separation radius"></input>
+				<p>Separation scale :</p>
+				<input type="number" value="2" id="separation_scale" placeholder="separation scale"></input>
 			</div>
 			<div>
 				<a href="https://github.com/MattEstHaut/boids">GitHub repository</a>

@@ -1,17 +1,5 @@
-document.getElementById("pause").onclick = () => {
-	if (PAUSE) {
-		PAUSE = false;
-		document.getElementById("pause").innerHTML = "pause";
-	} else {
-		PAUSE = true;
-		document.getElementById("pause").innerHTML = "unpause";
-	}
-}
+/*
 
-document.getElementById("reset").onclick = () => {
-	reset();
-	setup(document.getElementById("boids").value);
-}
 
 document.getElementById("sdistance").onchange = () => {
 	SEPARATION_PERCEPTION = document.getElementById("sdistance").value;
@@ -29,38 +17,124 @@ document.getElementById("scale").onchange = () => {
 	SCALE = document.getElementById("scale").value;
 }
 
-var ox = 0; var oy = 0; var or = 40;
-document.getElementById("obstacle").onclick = () => {
-	if (OBSTACLES.length > 0) {
-		document.getElementById("obstacle").innerHTML = "put obstacle";
-		OBSTACLES.length = 0;
+*/
+
+const canvas = document.getElementById("main-canvas");
+var left_down = false; var right_down = false;
+
+BOIDS.options.background_color = "#fba6ff";
+BOIDS.options.boid_color = "white";
+BOIDS.options.obstacle_color = "white";
+
+const default_values = {
+	cohesion_radius:   40,
+	alignement_radius: 30,
+	separation_radius: 20,
+	cohesion_scale:     1,
+	alignement_scale: 1.5,
+	separation_scale:   2
+}
+
+canvas.addEventListener('contextmenu', event => event.preventdefault_values());
+
+canvas.addEventListener("mousedown", (evt) => { 
+	if (evt.button == 0) {
+		left_down = true;
+		right_down = false;
+	} else if (evt.button == 2) {
+		right_down = true;
+		left_down = false;
+		let position = BOIDS.cam_to_real(evt.offsetX, evt.offsetY);
+		BOIDS.obstacles.push(new BOIDS.Obstacle(position.x, position.y, 3));
+	}
+});
+
+document.addEventListener("mouseup", (evt) => { 
+	if (evt.button == 0) {
+		left_down = false;
 	} else {
-		obstacle = true;
-		document.getElementById("obstacle").innerHTML = "remove obstacle";
-		OBSTACLES.push(new Obstacle(WIDTH/2+ox, HEIGHT/2+oy, or));
+		right_down = false;
+	}
+});
+
+canvas.addEventListener("mousemove", (evt) => {
+	if (left_down) {
+		BOIDS.options.cam_x -= evt.movementX/BOIDS.options.scale;
+		BOIDS.options.cam_y -= evt.movementY/BOIDS.options.scale;
+
+		BOIDS.legalize_cam();
+	} else if (right_down) {
+		let position = BOIDS.cam_to_real(evt.offsetX, evt.offsetY);
+		BOIDS.obstacles.push(new BOIDS.Obstacle(position.x, position.y, 3));
+	}
+});
+
+canvas.addEventListener("wheel", (evt) => {
+	if (evt.deltaY > 0 && BOIDS.options.scale > 1) {
+		BOIDS.options.scale -= 0.1;
+		BOIDS.legalize_cam();
+	} else if (evt.deltaY < 0) {
+		let direction = BOIDS.cam_to_real(evt.offsetX, evt.offsetY).sub(new BOIDS.Vector(BOIDS.options.cam_x, BOIDS.options.cam_y));
+		BOIDS.options.cam_x += direction.x/BOIDS.options.scale**4;
+		BOIDS.options.cam_y += direction.y/BOIDS.options.scale**4;
+		BOIDS.options.scale += 0.1;
+		BOIDS.legalize_cam();
+	}
+});
+
+document.getElementById("pause").onclick = () => {
+	if (BOIDS.options.pause) {
+		BOIDS.options.pause = false;
+		document.getElementById("pause").innerHTML = "pause";
+	} else {
+		BOIDS.options.pause = true;
+		document.getElementById("pause").innerHTML = "unpause";
 	}
 }
 
-document.getElementById("ox").onchange = () => {
-	ox = parseInt(document.getElementById("ox").value);
-	if (OBSTACLES.length > 0) {
-		OBSTACLES[0].position.x = WIDTH/2+ox;
-	}
+document.getElementById("reset").onclick = () => {
+	BOIDS.reset();
+	BOIDS.setup(document.getElementById("boids").value);
 }
 
-document.getElementById("oy").onchange = () => {
-	oy = parseInt(document.getElementById("oy").value);
-	if (OBSTACLES.length > 0) {
-		OBSTACLES[0].position.y = HEIGHT/2+oy;
-	}
+document.getElementById("clear").onclick = () => {
+	BOIDS.obstacles.length = 0;
 }
 
-document.getElementById("or").onchange = () => {
-	or = parseInt(document.getElementById("or").value);
-	if (OBSTACLES.length > 0) {
-		OBSTACLES[0].radius = or;
-	}
+document.getElementById("default").onclick = () => {
+	BOIDS.options.cohesion_radius = default_values.cohesion_radius;
+	BOIDS.options.cohesion_scale = default_values.cohesion_scale;
+	BOIDS.options.alignement_radius = default_values.alignement_radius;
+	BOIDS.options.alignement_scale = default_values.alignement_scale;
+	BOIDS.options.separation_radius = default_values.separation_radius;
+	BOIDS.options.separation_scale = default_values.separation_scale;
+	document.getElementById("cohesion_radius").value = default_values.cohesion_radius;
+	document.getElementById("cohesion_scale").value = default_values.cohesion_scale;
+	document.getElementById("alignement_radius").value = default_values.alignement_radius;
+	document.getElementById("alignement_scale").value = default_values.alignement_scale;
+	document.getElementById("separation_radius").value = default_values.separation_radius;
+	document.getElementById("separation_scale").value = default_values.separation_scale;
 }
 
-setup(300);
-run();
+document.getElementById("cohesion_radius").onchange = () => {
+	BOIDS.options.cohesion_radius = document.getElementById("cohesion_radius").value;
+}
+document.getElementById("cohesion_scale").onchange = () => {
+	BOIDS.options.cohesion_scale = document.getElementById("cohesion_scale").value;
+}
+document.getElementById("alignement_radius").onchange = () => {
+	BOIDS.options.alignement_radius = document.getElementById("alignement_radius").value;
+}
+document.getElementById("alignement_scale").onchange = () => {
+	BOIDS.options.alignement_scale = document.getElementById("alignement_scale").value;
+}
+document.getElementById("separation_radius").onchange = () => {
+	BOIDS.options.separation_radius = document.getElementById("separation_radius").value;
+}
+document.getElementById("separation_scale").onchange = () => {
+	BOIDS.options.separation_scale = document.getElementById("separation_scale").value;
+}
+
+BOIDS.set_canvas(canvas);
+BOIDS.setup(300);
+BOIDS.run();

@@ -2,11 +2,13 @@
 {
 	font-family: 'Roboto', sans-serif;
 	padding: 0; margin: 0;
+	overflow: hidden;
 }
 
 html, body
 {
 	height: 100%;
+	width: 100%;
 	background-color: #fba6ff;
 }
 
@@ -51,14 +53,22 @@ html, body
 
 #options > div > * 
 {
-	width: 20%;
+	width: 23%;
 }
 
 #options > div > p
 {
 	font-size: 13px;
-	color: #fba6ff;
+	color: white;
 	white-space: nowrap;
+	border-radius: 2px;
+	background-color: #fba6ff;
+}
+
+#options > div:first-child > p
+{
+	color: #fba6ff;
+	background-color: white;
 }
 
 button, input
