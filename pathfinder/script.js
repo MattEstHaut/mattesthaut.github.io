@@ -96,10 +96,7 @@ const remove_end = (x, y) => {
 }
 
 const add_solution = (x, y) => {
-	let initial = grid.children[y].children[x].classList[0];
-	grid.children[y].children[x].classList.remove(initial);
 	grid.children[y].children[x].classList.add("solution");
-	grid.children[y].children[x].classList.add(initial);
 }
 
 const get_labyrinth = () => {
@@ -212,7 +209,6 @@ grid.addEventListener("mouseup", (evt) => {
 })
 
 document.getElementById("export").addEventListener("mousedown", () => {
-	clear_path();
 	let labyrinth = get_labyrinth();
 	PATHFINDER.export(labyrinth);
 });
