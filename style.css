@@ -1,0 +1,35 @@
+*
+{
+	font-family: 'Roboto', sans-serif;
+	padding: 0;
+	margin: 0;
+}
+
+html, body
+{
+	height: 100%;
+	width: 100%;
+	background-color: #171c24;
+}
+
+#screen
+{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#info 
+{
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	font-size: 25px;
+}
+
+#info > *
+{
+	color: #c99430;
+	text-decoration: none;
+}
