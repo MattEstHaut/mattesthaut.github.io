@@ -1,0 +1,135 @@
+*
+{
+	font-family: 'Roboto', sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+html, body
+{
+	background-color: #a2c4f5;
+	height: 100%;
+	width: 100%;
+}
+
+#main
+{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	width: 1200px;
+	height: 800px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#grid
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+#grid > div
+{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+#grid > div > div
+{
+	transition: 0.4s;
+}
+
+#grid > div > div:hover
+{
+	opacity: 0.7;
+}
+
+#grid > div > div.path
+{
+	background-color: white;
+}
+
+#grid > div > div.wall
+{
+	background-color: #3d8af5;
+}
+
+#grid > div > div.solution
+{
+	background-color: pink;
+}
+
+#grid > div > div.start
+{
+	background-color: green;
+}
+
+#grid > div > div.end
+{
+	background-color: red;
+}
+
+#menu
+{
+	width: 300px;
+	background-color: white;
+	border-radius: 10px;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#menu > div
+{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	width: 80%;
+}
+
+#menu > div > *
+{
+	margin: 5px 0 5px 0;
+	width: 40%;
+	background-color: #a2c4f5;
+	text-align: center;
+	color: white;
+	border: none;
+	outline: none;
+	border-radius: 2px;
+	font-size: 15px;
+	font-weight: 300;
+}
+
+#menu > div > p
+{
+	color: black;
+	background-color: white;
+	padding-right: 0;
+	padding-left: 15px;
+	width: auto;
+}
+
+#menu > div > input.var
+{
+	width: 15%;
+}
+
+#menu > p
+{
+	margin: 10px 30px 10px 30px;
+}
+
+#menu > h1
+{
+	color: #a2c4f5;
+}

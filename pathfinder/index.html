@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pathfinder</title>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<div id="main">
+		<div id="grid"></div>
+		<div id="menu">
+			<h1>Pathfinder algoritm</h1>
+			<p>Look the GitHub repository for more informations.</p>
+			<div>
+				<input type="file" id="reader" style="display: none;"/>
+				<label for="reader">import</label>
+				<button id="export">export</button>
+			</div>
+			<div>
+				<button id="init">initialize</button>
+				<p>w:</p>
+				<input id="w" type="number" class="var" value="10" />
+				<p>h:</p>
+				<input id="h" type="number" class="var" value="10" />
+			</div>
+			<div>
+				<button id="startpoint">set startpoint</button>
+				<button id="endpoint">set endpoint</button>
+			</div>
+			<div>
+				<button id="resolve">resolve</button>
+				<button id="clear">clear</button>
+			</div>
+			<div>
+				<button>GitHub</button>
+				<button>Profile</button>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="pathfinder.js"></script>
+	<script type="text/javascript" src="script.js"></script>
+</body>
+</html>
