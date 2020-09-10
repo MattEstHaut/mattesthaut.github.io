@@ -212,7 +212,7 @@ grid.addEventListener("mouseup", (evt) => {
 })
 
 document.getElementById("export").addEventListener("mousedown", () => {
-	clear_path()
+	clear_path();
 	let labyrinth = get_labyrinth();
 	PATHFINDER.export(labyrinth);
 });
