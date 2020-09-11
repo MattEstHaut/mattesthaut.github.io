@@ -59,10 +59,9 @@ html, body
 #options > div > p
 {
 	font-size: 13px;
-	color: white;
+	color: #fba6ff;
 	white-space: nowrap;
 	border-radius: 2px;
-	background-color: #fba6ff;
 }
 
 #options > div:first-child > p
