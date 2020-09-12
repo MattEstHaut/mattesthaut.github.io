@@ -7,7 +7,7 @@
 
 html, body
 {
-	background-color: #a2c4f5;
+	background-color: #afc7ed;
 	height: 100%;
 	width: 100%;
 }
@@ -57,7 +57,7 @@ html, body
 
 #grid > div > div.wall
 {
-	background-color: #3d8af5;
+	background-color: #547fc4;
 }
 
 #grid > div > div.solution
@@ -67,12 +67,12 @@ html, body
 
 #grid > div > div.start
 {
-	background-color: green;
+	background-color: #65d6ad;
 }
 
 #grid > div > div.end
 {
-	background-color: red;
+	background-color: #d16097;
 }
 
 #menu
@@ -100,7 +100,7 @@ html, body
 {
 	margin: 5px 0 5px 0;
 	width: 40%;
-	background-color: #a2c4f5;
+	background-color: #afc7ed;
 	text-align: center;
 	color: white;
 	border: none;
@@ -131,5 +131,5 @@ html, body
 
 #menu > h1
 {
-	color: #a2c4f5;
+	color: #afc7ed;
 }
