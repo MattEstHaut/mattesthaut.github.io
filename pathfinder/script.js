@@ -130,7 +130,7 @@ const resolve = () => {
 const show_path = (path) => {
 	for (let step=0; step<path.length; step++) {
 		if (path[step].length == 2) {
-			setTimeout(() => {add_solution(path[step][1], path[step][0])}, 200*step);
+			setTimeout(() => {add_solution(path[step][1], path[step][0])}, 2000/path.length*step);
 		}
 	}
 }
@@ -147,17 +147,17 @@ PATHFINDER.import(reader, (labyrinth) => {
 	initialize(labyrinth.length, labyrinth[0].length);
 	for (let row=0; row<labyrinth.length; row++) {
 		for (let column=0; column<labyrinth[0].length; column++) {
-			if (labyrinth[row][column] == 1) {
-				grid.children[row].children[column].classList.remove("path");
-				grid.children[row].children[column].classList.add("wall");
+			if (labyrinth[row][column] == 0) {
+				grid.children[row].children[column].classList.remove("wall");
+				grid.children[row].children[column].classList.add("path");
 			} else if (labyrinth[row][column] == 2) {
-				grid.children[row].children[column].classList.remove("path");
+				grid.children[row].children[column].classList.remove("wall");
 				grid.children[row].children[column].classList.add("start");
-				grid.children[row].children[column].classList.add("path");
+				grid.children[row].children[column].classList.add("wall");
 			} else if (labyrinth[row][column] == 3) {
-				grid.children[row].children[column].classList.remove("path");
+				grid.children[row].children[column].classList.remove("wall");
 				grid.children[row].children[column].classList.add("end");
-				grid.children[row].children[column].classList.add("path");
+				grid.children[row].children[column].classList.add("wall");
 			}
 			
 		}
