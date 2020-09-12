@@ -1,11 +1,12 @@
 const grid = document.getElementById("grid");
 const reader = document.getElementById("reader");
+
 const max_s = 800;
 var start = []; var end = [];
 var startpoint_mode = false;
 var endpoint_mode = false;
 var mousedown = false;
-var lc = "";
+var lc = -1;
 
 const initialize = (width, height) => {
 	grid.innerHTML = "";
@@ -26,7 +27,7 @@ const initialize = (width, height) => {
 			grid_case.style.height = case_side+"px";
 			grid_case.style.width = case_side+"px";
 			grid_case.style.borderRadius = case_border+"px";
-			grid_case.classList.add("path");
+			grid_case.classList.add("wall");
 			grid_case.addEventListener("mousedown", (evt) => {
 				if (startpoint_mode) {
 					move_start(get_childindex(evt.path[0]),get_childindex(evt.path[1]));
@@ -106,16 +107,16 @@ const get_labyrinth = () => {
 		for (let grid_case of grid.children[row].children) {
 			switch (grid_case.classList[0]) {
 				case "path":
-					labyrinth[row].push(" ");
+					labyrinth[row].push(0);
 					break;
 				case "wall":
-					labyrinth[row].push("#");
+					labyrinth[row].push(1);
 					break;
 				case "start":
-					labyrinth[row].push("S");
+					labyrinth[row].push(2);
 					break;
 				default:
-					labyrinth[row].push("E");
+					labyrinth[row].push(3);
 			}
 		}
 	}
@@ -146,14 +147,14 @@ PATHFINDER.import(reader, (labyrinth) => {
 	initialize(labyrinth.length, labyrinth[0].length);
 	for (let row=0; row<labyrinth.length; row++) {
 		for (let column=0; column<labyrinth[0].length; column++) {
-			if (labyrinth[row][column] == "#") {
+			if (labyrinth[row][column] == 1) {
 				grid.children[row].children[column].classList.remove("path");
 				grid.children[row].children[column].classList.add("wall");
-			} else if (labyrinth[row][column] == "S") {
+			} else if (labyrinth[row][column] == 2) {
 				grid.children[row].children[column].classList.remove("path");
 				grid.children[row].children[column].classList.add("start");
 				grid.children[row].children[column].classList.add("path");
-			} else if (labyrinth[row][column] == "E") {
+			} else if (labyrinth[row][column] == 3) {
 				grid.children[row].children[column].classList.remove("path");
 				grid.children[row].children[column].classList.add("end");
 				grid.children[row].children[column].classList.add("path");
@@ -163,7 +164,7 @@ PATHFINDER.import(reader, (labyrinth) => {
 	}
 	for (let row=0; row<labyrinth.length; row++) {
 		for (let column=0; column<labyrinth[0].length; column++) {
-			if (labyrinth[row][column] == "S") {
+			if (labyrinth[row][column] == 2) {
 				start = [row, column];
 			}
 		}
@@ -172,8 +173,8 @@ PATHFINDER.import(reader, (labyrinth) => {
 
 document.getElementById("resolve").addEventListener("mousedown", () => {
 	let solution = resolve();
-	if (solution.solutions.length > 0) {
-		show_path(solution.shortest);
+	if (solution.length > 0) {
+		show_path(solution);
 	}
 })
 
