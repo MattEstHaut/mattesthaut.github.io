@@ -1,24 +1,3 @@
-/*
-
-
-document.getElementById("sdistance").onchange = () => {
-	SEPARATION_PERCEPTION = document.getElementById("sdistance").value;
-}
-
-document.getElementById("adistance").onchange = () => {
-	ALIGNEMENT_PERCEPTION = document.getElementById("adistance").value;
-}
-
-document.getElementById("cdistance").onchange = () => {
-	COHESION_PERCEPTION = document.getElementById("cdistance").value;
-}
-
-document.getElementById("scale").onchange = () => {
-	SCALE = document.getElementById("scale").value;
-}
-
-*/
-
 const canvas = document.getElementById("main-canvas");
 var left_down = false; var right_down = false;
 

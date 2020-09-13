@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fractal</title>
+	<link rel="icon" href="../favicon.ico" />
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+	<div id="main">
+		<canvas id="fractal" width="900" height="900"></canvas>
+		<div id=options>
+			<h1>Fractal visualizer</h1>
+			<div>
+				<div>
+					<button id="dragon">Dragon</button> <p>iterations : </p> <input id="di" type="number" value="15" min="0" max="20">
+				</div>
+				<div>
+					<button id="levy">Levy</button> <p>iterations : </p> <input id="li" type="number" value="15" min="0" max="20">
+				</div>
+				<div>
+					<button id="mandelbrot">Mandelbrot</button> <p>iterations : </p> <input id="mi" type="number" value="20" min="0" max="30">
+				</div>
+			</div>	
+		</div>
+	</div>
+	<div id="links">
+		<a href="https://github.com/MattEstHaut/fractal">GitHub repository</a>
+		<a href="https://github.com/MattEstHaut">GitHub profile</a>
+	</div>
+
+	<script type="text/javascript" src="fractal.js"></script>
+	<script type="text/javascript" src="script.js"></script>
+</body>
+</html>
