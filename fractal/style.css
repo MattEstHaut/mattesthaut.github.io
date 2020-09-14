@@ -111,3 +111,9 @@ html, body
 {
 	color: #b3943e;
 }
+
+#fractal
+{
+	width: 900px;
+	height: 900px;
+}

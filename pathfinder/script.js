@@ -39,11 +39,9 @@ const initialize = (width, height) => {
 				} else {
 					lc = evt.path[0].classList[0];
 					if (evt.path[0].classList[0] == "path") {
-						evt.path[0].classList.remove("path");
-						evt.path[0].classList.add("wall");
+						change(evt.path[0], "path", "wall");
 					} else {
-						evt.path[0].classList.add("path");
-						evt.path[0].classList.remove("wall");
+						change(evt.path[0], "wall", "path");
 					}
 				}
 			});
@@ -51,11 +49,9 @@ const initialize = (width, height) => {
 				if (!startpoint_mode && !endpoint_mode) {
 					if (mousedown && evt.path[0].classList[0]==lc && evt.path[0].classList[0]!="start" && evt.path[0].classList[0]!="end") {
 						if (evt.path[0].classList[0] == "path") {
-							evt.path[0].classList.remove("path");
-							evt.path[0].classList.add("wall");
+							change(evt.path[0], "path", "wall");
 						} else {
-							evt.path[0].classList.add("path");
-							evt.path[0].classList.remove("wall");
+							change(evt.path[0], "wall", "path");
 						}
 					}
 				}
@@ -66,6 +62,16 @@ const initialize = (width, height) => {
 	}
 }
 
+const reinitialize = () => {
+	for (let row=0; row < grid.children.length; row++) {
+		for (let column=0; column < grid.children[row].children.length; column++) {
+			setTimeout(() => {
+				change(grid.children[row].children[column], "all", "wall");
+			}, Math.random()*500);
+		}
+	}
+};
+
 const get_childindex = (child) => {
 	let parent = child.parentNode;
 	return Array.prototype.indexOf.call(parent.children, child);
@@ -73,31 +79,34 @@ const get_childindex = (child) => {
 
 const move_start = (x, y) => {
 	if (start.length == 2) {
-		grid.children[start[0]].children[start[1]].classList.remove("start");
+		change(grid.children[start[0]].children[start[1]], "start", "");
 	}
 	let initial = grid.children[y].children[x].classList[0];
-	grid.children[y].children[x].classList.remove(initial);
-	grid.children[y].children[x].classList.add("start");
-	grid.children[y].children[x].classList.add(initial);
+	change(grid.children[y].children[x], initial, "start");
+	setTimeout(() => {
+		grid.children[y].children[x].classList.add(initial);
+	}, 650);
 	start = [y, x];
 }
 
 const add_end = (x, y) => {
 	let initial = grid.children[y].children[x].classList[0];
-	grid.children[y].children[x].classList.remove(initial);
-	grid.children[y].children[x].classList.add("end");
-	grid.children[y].children[x].classList.add(initial);
+	change(grid.children[y].children[x], initial, "end");
+	setTimeout(() => {
+		grid.children[y].children[x].classList.add(initial);
+	}, 650);
 	end = [x, y];
 }
 
 const remove_end = (x, y) => {
 	if (end.length == 2) {
 		grid.children[y].children[x].classList.remove("end");
+		change(grid.children[y].children[x], "end", "");
 	}
 }
 
 const add_solution = (x, y) => {
-	grid.children[y].children[x].classList.add("solution");
+	change(grid.children[y].children[x], "", "solution");
 }
 
 const get_labyrinth = () => {
@@ -138,10 +147,42 @@ const show_path = (path) => {
 var clear_path = () => {
 	for (let row=0; row<grid.children.length; row++) {
 		for (let column=0; column<grid.children[0].children.length; column++) {
-			grid.children[row].children[column].classList.remove("solution");
+			if (grid.children[row].children[column].classList.contains("solution")) {
+				setTimeout(() => {
+					change(grid.children[row].children[column], "solution", "");
+				}, Math.random()*500);
+			}
 		}
 	}
 }
+
+const change = (element, old, c) => {
+	let initial = element.classList[0];
+	element.style.transitionDuration = "0.2s";
+	element.classList.add("r1");
+	setTimeout(() => {
+		element.style.transitionDuration = "0s";
+		if (old != "")
+			element.classList.remove(old);
+		if (old == "all") {
+			element.classList.remove("solution");
+			element.classList.remove("start");
+			element.classList.remove("end");
+			element.classList.remove("wall");
+			element.classList.remove("path");
+		}
+		if (c != "")
+			element.classList.add(c);
+		element.classList.remove("r1");
+		element.style.transitionDuration = "0.2s";
+		element.classList.add("r2");
+	}, 200);
+	setTimeout(() => {
+		element.style.transitionDuration = "0s";
+		element.classList.remove("r2");
+	}, 400);
+}
+
 
 PATHFINDER.import(reader, (labyrinth) => {
 	initialize(labyrinth.length, labyrinth[0].length);
@@ -187,9 +228,22 @@ document.getElementById("endpoint").addEventListener("mousedown", () => {
 })
 
 document.getElementById("init").addEventListener("mousedown", () => {
+	document.getElementById("init").innerHTML = "reset";
 	let w = document.getElementById("w").value;
 	let h = document.getElementById("h").value;
-	initialize(w, h);
+	if (h == grid.children.length && w == grid.children[0].children.length) {
+		reinitialize();
+	} else {
+		initialize(w, h);
+	}
+})
+
+document.getElementById("w").addEventListener("change", () => {
+	document.getElementById("init").innerHTML = "initialize";
+})
+
+document.getElementById("h").addEventListener("change", () => {
+	document.getElementById("init").innerHTML = "initialize";
 })
 
 document.getElementById("clear").addEventListener("mousedown", () => {

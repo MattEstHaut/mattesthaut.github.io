@@ -7,7 +7,7 @@
 
 html, body
 {
-	background-color: #afc7ed;
+	background-color: #351a5e;
 	height: 100%;
 	width: 100%;
 }
@@ -40,11 +40,6 @@ html, body
 	justify-content: space-around;
 }
 
-#grid > div > div
-{
-	transition: 0.4s;
-}
-
 #grid > div > div:hover
 {
 	opacity: 0.7;
@@ -52,12 +47,12 @@ html, body
 
 #grid > div > div.path
 {
-	background-color: white;
+	background-color: #936fc9;
 }
 
 #grid > div > div.wall
 {
-	background-color: #547fc4;
+	background-color: #180338;
 }
 
 #grid > div > div.solution
@@ -67,12 +62,17 @@ html, body
 
 #grid > div > div.start
 {
-	background-color: #65d6ad;
+	background-color: #098770;
 }
 
 #grid > div > div.end
 {
-	background-color: #d16097;
+	background-color: #87093e;
+}
+
+#grid > div > div.void
+{
+	background-color: #351a5e;
 }
 
 #menu
@@ -100,7 +100,7 @@ html, body
 {
 	margin: 5px 0 5px 0;
 	width: 40%;
-	background-color: #afc7ed;
+	background-color: #351a5e;
 	text-align: center;
 	color: white;
 	border: none;
@@ -131,5 +131,15 @@ html, body
 
 #menu > h1
 {
-	color: #afc7ed;
+	color: #351a5e;
+}
+
+.r1
+{
+	transform: rotateX(-90deg);
+}
+
+.r2
+{
+	transform: rotateX(-180deg);
 }
