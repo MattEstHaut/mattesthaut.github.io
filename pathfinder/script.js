@@ -231,6 +231,7 @@ document.getElementById("init").addEventListener("mousedown", () => {
 	document.getElementById("init").innerHTML = "reset";
 	let w = document.getElementById("w").value;
 	let h = document.getElementById("h").value;
+	start = []; end = [];
 	if (h == grid.children.length && w == grid.children[0].children.length) {
 		reinitialize();
 	} else {
