@@ -221,9 +221,11 @@ document.getElementById("resolve").addEventListener("mousedown", () => {
 
 document.getElementById("startpoint").addEventListener("mousedown", () => {
 	startpoint_mode = true;
+	endpoint_mode = false;
 })
 
 document.getElementById("endpoint").addEventListener("mousedown", () => {
+	startpoint_mode = false;
 	endpoint_mode = true;
 })
 
