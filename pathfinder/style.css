@@ -75,6 +75,11 @@ html, body
 	background-color: #351a5e;
 }
 
+#grid > div > div.impossible
+{
+	background-color: #87093e;
+}
+
 #menu
 {
 	width: 300px;

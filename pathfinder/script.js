@@ -183,6 +183,25 @@ const change = (element, old, c) => {
 	}, 400);
 }
 
+const impossible = () => {
+	for (let row=0; row < grid.children.length; row++) {
+		for (let column=0; column < grid.children[row].children.length; column++) {
+			grid.children[row].children[column].style.transitionDuration = "0.1s";
+			grid.children[row].children[column].classList.add("impossible");
+			setTimeout(() => {
+				grid.children[row].children[column].classList.remove("impossible");
+			}, 100);
+			setTimeout(() => {
+				grid.children[row].children[column].classList.add("impossible");
+			}, 200);
+			setTimeout(() => {
+				grid.children[row].children[column].classList.remove("impossible");
+				grid.children[row].children[column].style.transitionDuration = "0";
+			}, 300);
+		}
+	}	
+}
+
 
 PATHFINDER.import(reader, (labyrinth) => {
 	initialize(labyrinth.length, labyrinth[0].length);
@@ -216,6 +235,8 @@ document.getElementById("resolve").addEventListener("mousedown", () => {
 	let solution = resolve();
 	if (solution.length > 0) {
 		show_path(solution);
+	} else {
+		impossible();
 	}
 })
 
