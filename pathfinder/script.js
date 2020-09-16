@@ -2,7 +2,7 @@ const grid = document.getElementById("grid");
 const reader = document.getElementById("reader");
 
 const max_s = 800;
-var start = []; var end = [];
+var start = [];
 var startpoint_mode = false;
 var endpoint_mode = false;
 var mousedown = false;
@@ -33,8 +33,11 @@ const initialize = (width, height) => {
 					move_start(get_childindex(evt.path[0]),get_childindex(evt.path[1]));
 					startpoint_mode = false;
 				} else if (endpoint_mode) {
-					remove_end(end[0], end[1]);
-					add_end(get_childindex(evt.path[0]),get_childindex(evt.path[1]));
+					if (evt.path[0].classList.contains("end")) {
+						change(evt.path[0], "end", "");
+					} else {
+						change(evt.path[0], "", "end");
+					}
 					endpoint_mode = false;
 				} else {
 					lc = evt.path[0].classList[0];
@@ -87,22 +90,6 @@ const move_start = (x, y) => {
 		grid.children[y].children[x].classList.add(initial);
 	}, 650);
 	start = [y, x];
-}
-
-const add_end = (x, y) => {
-	let initial = grid.children[y].children[x].classList[0];
-	change(grid.children[y].children[x], initial, "end");
-	setTimeout(() => {
-		grid.children[y].children[x].classList.add(initial);
-	}, 650);
-	end = [x, y];
-}
-
-const remove_end = (x, y) => {
-	if (end.length == 2) {
-		grid.children[y].children[x].classList.remove("end");
-		change(grid.children[y].children[x], "end", "");
-	}
 }
 
 const add_solution = (x, y) => {
@@ -208,16 +195,11 @@ PATHFINDER.import(reader, (labyrinth) => {
 	for (let row=0; row<labyrinth.length; row++) {
 		for (let column=0; column<labyrinth[0].length; column++) {
 			if (labyrinth[row][column] == 0) {
-				grid.children[row].children[column].classList.remove("wall");
-				grid.children[row].children[column].classList.add("path");
+				change(grid.children[row].children[column], "wall", "path");
 			} else if (labyrinth[row][column] == 2) {
-				grid.children[row].children[column].classList.remove("wall");
-				grid.children[row].children[column].classList.add("start");
-				grid.children[row].children[column].classList.add("wall");
+				change(grid.children[row].children[column], "wall", "start");
 			} else if (labyrinth[row][column] == 3) {
-				grid.children[row].children[column].classList.remove("wall");
-				grid.children[row].children[column].classList.add("end");
-				grid.children[row].children[column].classList.add("wall");
+				change(grid.children[row].children[column], "wall", "end");
 			}
 			
 		}
