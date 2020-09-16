@@ -36,7 +36,7 @@ const initialize = (width, height) => {
 					if (evt.path[0].classList.contains("end")) {
 						change(evt.path[0], "end", "");
 					} else {
-						change(evt.path[0], "", "end");
+						change(evt.path[0], "start", "end");
 					}
 					endpoint_mode = false;
 				} else {
@@ -85,6 +85,7 @@ const move_start = (x, y) => {
 		change(grid.children[start[0]].children[start[1]], "start", "");
 	}
 	let initial = grid.children[y].children[x].classList[0];
+	grid.children[y].children[x].classList.remove("end");
 	change(grid.children[y].children[x], initial, "start");
 	setTimeout(() => {
 		grid.children[y].children[x].classList.add(initial);
@@ -101,18 +102,14 @@ const get_labyrinth = () => {
 	for (let row=0; row<grid.children.length; row++) {
 		labyrinth.push([]);
 		for (let grid_case of grid.children[row].children) {
-			switch (grid_case.classList[0]) {
-				case "path":
-					labyrinth[row].push(0);
-					break;
-				case "wall":
-					labyrinth[row].push(1);
-					break;
-				case "start":
-					labyrinth[row].push(2);
-					break;
-				default:
-					labyrinth[row].push(3);
+			if (grid_case.classList.contains("end")) {
+				labyrinth[row].push(3);
+			} else if (grid_case.classList.contains("start")) {
+				labyrinth[row].push(2);
+			} else if (grid_case.classList.contains("path")) {
+				labyrinth[row].push(0);
+			} else {
+				labyrinth[row].push(1);
 			}
 		}
 	}
